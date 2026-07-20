@@ -5,6 +5,10 @@ import BottomNav from "./components/BottomNav";
 export const metadata: Metadata = {
   title: "FEP App",
   description: "Federação Equestre Portuguesa",
+  icons: {
+    icon: "/logfep.png",
+    apple: "/logfep.png",
+  },
 };
 
 export default function RootLayout({
