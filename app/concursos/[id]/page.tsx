@@ -78,7 +78,21 @@ export default async function DetalheConcurso({ params }: { params: Promise<{ id
           ))}
         </div>
       </div>
-
+      {/* Programa */}
+        <div className="px-4">
+        <p className="text-[10px] font-medium text-[#6b6b6b] uppercase tracking-widest mb-3">
+         Programa
+  </p>
+  <a href={concurso.programaUrl} target="_blank" rel="noopener noreferrer">
+    <div className="bg-white border border-[#e8e4df] rounded-xl px-4 py-3 flex items-center gap-3 mb-4">
+      <span className="text-xl">📄</span>
+      <div className="flex-1">
+        <p className="text-sm font-medium text-[#1a1a1a]">Ver programa oficial</p>
+        <p className="text-xs text-[#003d7a] mt-0.5">Abre no site da FEP →</p>
+      </div>
+    </div>
+  </a>
+</div>
       {/* Ordem de entrada */}
       <div className="px-4">
         <p className="text-[10px] font-medium text-[#6b6b6b] uppercase tracking-widest mb-3">
