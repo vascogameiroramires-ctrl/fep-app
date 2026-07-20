@@ -51,9 +51,9 @@ export default function Home() {
         <div className="grid grid-cols-4 gap-2">
           {[
             { href: "/concursos", icon: "🏆", label: "Concursos", bg: "bg-[#e6eef7]" },
-            { href: "/cavalos", icon: "🐎", label: "Cavalos", bg: "bg-[#1a1a1a]" },
+            { href: "/cavalos", icon: "🐎", label: "Cavalos", bg: "bg-[#e8f0e8]" },           
             { href: "/cavaleiros", icon: "👤", label: "Cavaleiros", bg: "bg-[#e6eef7]" },
-            { href: "/rankings", icon: "📊", label: "Rankings", bg: "bg-[#1a1a1a]" },
+            { href: "/rankings", icon: "📊", label: "Rankings", bg: "bg-[#e6eef7]" },
             { href: "/clubes", icon: "🏛️", label: "Clubes", bg: "bg-[#e8f0e8]" },
             { href: "/concursos", icon: "📅", label: "Calendário", bg: "bg-[#f0ece6]" },
             { href: "/concursos", icon: "📈", label: "Resultados", bg: "bg-[#e8f0e8]" },
