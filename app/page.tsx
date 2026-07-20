@@ -21,7 +21,7 @@ export default function Home() {
             FEP
           </div>
           <div>
-            <h1 className="text-white text-base font-medium">Federação Equestre</h1>
+            <h1 className="text-white text-sm font-medium">Federação Equestre Portuguesa</h1>
             <p className="text-gray-500 text-xs mt-0.5">Boa tarde, João Silva</p>
           </div>
         </div>
