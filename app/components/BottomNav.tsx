@@ -15,29 +15,27 @@ export default function BottomNav() {
   const pathname = usePathname();
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-[#e8e4df] flex justify-around items-center py-2 pb-4 z-50">
-      {navItems.map((item) => {
-        const active = pathname === item.href;
-        return (
-          <Link
-            key={item.href}
-            href={item.href}
-            className="flex flex-col items-center gap-1"
-          >
-            <span className="text-xl">{item.icon}</span>
-            <span
-              className={`text-[10px] font-medium ${
-                active ? "text-[#003d7a]" : "text-[#6b6b6b]"
-              }`}
+    <div className="fixed bottom-0 left-0 right-0 flex justify-center z-50">
+      <nav className="w-full max-w-[390px] bg-white border-t border-[#e8e4df] flex justify-around items-center py-2 pb-4">
+        {navItems.map((item) => {
+          const active = pathname === item.href;
+          return (
+            <Link
+              key={item.href}
+              href={item.href}
+              className="flex flex-col items-center gap-1"
             >
-              {item.label}
-            </span>
-            {active && (
-              <div className="w-1 h-1 rounded-full bg-[#003d7a]" />
-            )}
-          </Link>
-        );
-      })}
-    </nav>
+              <span className="text-xl">{item.icon}</span>
+              <span className={`text-[10px] font-medium ${active ? "text-[#003d7a]" : "text-[#6b6b6b]"}`}>
+                {item.label}
+              </span>
+              {active && (
+                <div className="w-1 h-1 rounded-full bg-[#003d7a]" />
+              )}
+            </Link>
+          );
+        })}
+      </nav>
+    </div>
   );
 }

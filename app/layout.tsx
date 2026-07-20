@@ -14,9 +14,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="pt">
-      <body className="bg-[#f9f7f4] max-w-[390px] mx-auto min-h-screen relative">
-        {children}
-        <BottomNav />
+      <body className="bg-[#e8e4df] min-h-screen flex justify-center">
+        <div className="w-full max-w-[390px] bg-[#f9f7f4] min-h-screen relative shadow-xl">
+          {children}
+          <BottomNav />
+        </div>
       </body>
     </html>
   );
