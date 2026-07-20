@@ -10,6 +10,7 @@ export default function Inscricao({ params }: { params: Promise<{ id: string }> 
 
   const [passo, setPasso] = useState(2);
   const [provasSelecionadas, setProvasSelecionadas] = useState<Record<string, string[]>>({});
+  const [pesquisas, setPesquisas] = useState<Record<string, string>>({});
   const [box, setBox] = useState(false);
   const [palha, setPalha] = useState(false);
   const [aparas, setAparas] = useState(false);
@@ -36,6 +37,10 @@ export default function Inscricao({ params }: { params: Promise<{ id: string }> 
     });
   };
 
+  const setPesquisa = (provaId: string, valor: string) => {
+    setPesquisas((prev) => ({ ...prev, [provaId]: valor }));
+  };
+
   const provasComCavalos = Object.entries(provasSelecionadas).filter(([, c]) => c.length > 0);
   const total = provasComCavalos.reduce((acc, [provaId, cavalosArr]) => {
     const prova = concurso.provas.find((p) => p.id === provaId);
@@ -45,13 +50,11 @@ export default function Inscricao({ params }: { params: Promise<{ id: string }> 
   return (
     <main className="pb-24">
 
-      {/* Status bar */}
       <div className="bg-[#1a1a1a] px-5 pt-3 pb-2 flex justify-between items-center">
         <span className="text-xs text-gray-400">9:41</span>
         <span className="text-xs text-gray-400">◆ ▮</span>
       </div>
 
-      {/* Header */}
       <div className="bg-[#1a1a1a] px-5 pb-4 flex justify-between items-center">
         <div className="flex items-center gap-3">
           <Link href={`/concursos/${concurso.id}`} className="text-gray-500 text-xl">‹</Link>
@@ -60,7 +63,6 @@ export default function Inscricao({ params }: { params: Promise<{ id: string }> 
         <span className="text-gray-500 text-xl">✕</span>
       </div>
 
-      {/* Progress */}
       <div className="bg-[#1a1a1a] px-5 pb-4">
         <div className="flex items-center">
           {["Concurso", "Provas e cavalos", "Alojamento", "Confirmar"].map((s, i) => (
@@ -83,7 +85,6 @@ export default function Inscricao({ params }: { params: Promise<{ id: string }> 
         </div>
       </div>
 
-      {/* Concurso resumo */}
       <div className="mx-4 mt-4 bg-white border border-[#e8e4df] rounded-xl px-4 py-3 flex items-center gap-3">
         <div className="min-w-[40px] bg-[#003d7a] rounded-lg py-1.5 flex flex-col items-center flex-shrink-0">
           <span className="text-white text-sm font-medium leading-none">{new Date(concurso.data).getDate()}</span>
@@ -95,67 +96,67 @@ export default function Inscricao({ params }: { params: Promise<{ id: string }> 
         </div>
       </div>
 
-      {/* Passo 2 — Provas e cavalos */}
       {passo === 2 && (
-  <>
-    <div className="px-4 pt-4">
-      <p className="text-[10px] font-medium text-[#6b6b6b] uppercase tracking-widest mb-3">
-        Seleciona provas e cavalos
-      </p>
-      {concurso.provas.map((p) => {
-        const cavalosNaProva = provasSelecionadas[p.id] || [];
-        const selecionada = cavalosNaProva.length > 0;
-        const [pesquisa, setPesquisa] = useState("");
-        const cavalosVisiveis = cavalos.filter(
-          (c) =>
-            c.nome.toLowerCase().includes(pesquisa.toLowerCase()) ||
-            c.numeroFep.toLowerCase().includes(pesquisa.toLowerCase())
-        );
-        return (
-          <div key={p.id} className={`bg-white border rounded-xl mb-3 overflow-hidden ${selecionada ? "border-[#003d7a]" : "border-[#e8e4df]"}`}>
-            <div className="px-4 py-3 flex items-center gap-3">
-              <div className={`w-5 h-5 rounded flex items-center justify-center flex-shrink-0 border ${selecionada ? "bg-[#003d7a] border-[#003d7a]" : "border-[#e8e4df]"}`}>
-                {selecionada && <span className="text-white text-xs">✓</span>}
-              </div>
-              <div className="flex-1">
-                <p className="text-sm font-medium text-[#1a1a1a]">{p.nome}</p>
-                <p className="text-xs text-[#6b6b6b] mt-0.5">🕐 {p.horario} · {p.pista}</p>
-              </div>
-              <span className="text-sm font-medium text-[#1a1a1a]">{p.taxa} € / cavalo</span>
-            </div>
-            <div className="border-t border-[#e6eef7] bg-[#e6eef7] px-4 py-3">
-              <p className="text-[10px] text-[#003d7a] font-medium uppercase tracking-wide mb-2">Cavalos</p>
-              <input
-                type="text"
-                placeholder="Pesquisar por nome ou nº FEP..."
-                value={pesquisa}
-                onChange={(e) => setPesquisa(e.target.value)}
-                className="w-full bg-white border border-[#c0d4ec] rounded-lg px-3 py-2 text-xs text-[#1a1a1a] placeholder-[#bbb] outline-none mb-2"
-              />
-              <div className="flex flex-wrap gap-2">
-                {cavalosVisiveis.length > 0 ? cavalosVisiveis.map((c) => {
-                  const selected = cavalosNaProva.includes(c.nome);
-                  return (
-                    <button
-                      key={c.id}
-                      onClick={() => toggleCavalo(p.id, c.nome)}
-                      className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium ${
-                        selected ? "bg-[#003d7a] text-white" : "bg-white text-[#003d7a] border border-[#003d7a]"
-                      }`}
-                    >
-                      🐎 {c.nome}
-                      {selected && <span className="text-white/70 text-[10px]">✕</span>}
-                    </button>
-                  );
-                }) : (
-                  <p className="text-xs text-[#6b6b6b]">Nenhum cavalo encontrado.</p>
-                )}
-              </div>
-            </div>
+        <>
+          <div className="px-4 pt-4">
+            <p className="text-[10px] font-medium text-[#6b6b6b] uppercase tracking-widest mb-3">
+              Seleciona provas e cavalos
+            </p>
+            {concurso.provas.map((p) => {
+              const cavalosNaProva = provasSelecionadas[p.id] || [];
+              const selecionada = cavalosNaProva.length > 0;
+              const pesquisa = pesquisas[p.id] || "";
+              const cavalosVisiveis = cavalos.filter(
+                (c) =>
+                  c.nome.toLowerCase().includes(pesquisa.toLowerCase()) ||
+                  c.numeroFep.toLowerCase().includes(pesquisa.toLowerCase())
+              );
+              return (
+                <div key={p.id} className={`bg-white border rounded-xl mb-3 overflow-hidden ${selecionada ? "border-[#003d7a]" : "border-[#e8e4df]"}`}>
+                  <div className="px-4 py-3 flex items-center gap-3">
+                    <div className={`w-5 h-5 rounded flex items-center justify-center flex-shrink-0 border ${selecionada ? "bg-[#003d7a] border-[#003d7a]" : "border-[#e8e4df]"}`}>
+                      {selecionada && <span className="text-white text-xs">✓</span>}
+                    </div>
+                    <div className="flex-1">
+                      <p className="text-sm font-medium text-[#1a1a1a]">{p.nome}</p>
+                      <p className="text-xs text-[#6b6b6b] mt-0.5">🕐 {p.horario} · {p.pista}</p>
+                    </div>
+                    <span className="text-sm font-medium text-[#1a1a1a]">{p.taxa} € / cavalo</span>
+                  </div>
+                  <div className="border-t border-[#e6eef7] bg-[#e6eef7] px-4 py-3">
+                    <p className="text-[10px] text-[#003d7a] font-medium uppercase tracking-wide mb-2">Cavalos</p>
+                    <input
+                      type="text"
+                      placeholder="Pesquisar por nome ou nº FEP..."
+                      value={pesquisa}
+                      onChange={(e) => setPesquisa(p.id, e.target.value)}
+                      className="w-full bg-white border border-[#c0d4ec] rounded-lg px-3 py-2 text-xs text-[#1a1a1a] placeholder-[#bbb] outline-none mb-2"
+                    />
+                    <div className="flex flex-wrap gap-2">
+                      {cavalosVisiveis.length > 0 ? cavalosVisiveis.map((c) => {
+                        const selected = cavalosNaProva.includes(c.nome);
+                        return (
+                          <button
+                            key={c.id}
+                            onClick={() => toggleCavalo(p.id, c.nome)}
+                            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium ${
+                              selected ? "bg-[#003d7a] text-white" : "bg-white text-[#003d7a] border border-[#003d7a]"
+                            }`}
+                          >
+                            🐎 {c.nome}
+                            {selected && <span className="text-white/70 text-[10px]">✕</span>}
+                          </button>
+                        );
+                      }) : (
+                        <p className="text-xs text-[#6b6b6b]">Nenhum cavalo encontrado.</p>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
           </div>
-        );
-      })}
-    </div>
+
           {provasComCavalos.length > 0 && (
             <div className="mx-4 bg-white border border-[#e8e4df] rounded-xl overflow-hidden mb-4">
               {provasComCavalos.map(([provaId, cavalosArr]) => {
@@ -187,7 +188,6 @@ export default function Inscricao({ params }: { params: Promise<{ id: string }> 
         </>
       )}
 
-      {/* Passo 3 — Alojamento */}
       {passo === 3 && (
         <>
           <div className="px-4 pt-4">
@@ -241,7 +241,6 @@ export default function Inscricao({ params }: { params: Promise<{ id: string }> 
         </>
       )}
 
-      {/* Passo 4 — Confirmação */}
       {passo === 4 && (
         <>
           <div className="px-4 pt-4">
