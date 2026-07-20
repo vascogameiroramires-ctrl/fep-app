@@ -83,7 +83,7 @@ export default async function DetalheConcurso({ params }: { params: Promise<{ id
         <p className="text-[10px] font-medium text-[#6b6b6b] uppercase tracking-widest mb-3">
          Programa
   </p>
-  <a href={concurso.programaUrl} target="_blank" rel="noopener noreferrer">
+  <a href={(concurso as any).programaUrl || "#"} target="_blank" rel="noopener noreferrer">
     <div className="bg-white border border-[#e8e4df] rounded-xl px-4 py-3 flex items-center gap-3 mb-4">
       <span className="text-xl">📄</span>
       <div className="flex-1">
