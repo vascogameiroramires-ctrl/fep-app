@@ -15,6 +15,10 @@ export default function Inscricao({ params }: { params: Promise<{ id: string }> 
   const [palha, setPalha] = useState(false);
   const [aparas, setAparas] = useState(false);
   const [feno, setFeno] = useState(false);
+  const [qtdBox, setQtdBox] = useState(1);
+  const [qtdPalha, setQtdPalha] = useState(1);
+  const [qtdAparas, setQtdAparas] = useState(1);
+  const [qtdFeno, setQtdFeno] = useState(1);
   const [observacoes, setObservacoes] = useState("");
 
   if (!concurso) {
@@ -96,6 +100,7 @@ export default function Inscricao({ params }: { params: Promise<{ id: string }> 
         </div>
       </div>
 
+      {/* Passo 2 — Provas e cavalos */}
       {passo === 2 && (
         <>
           <div className="px-4 pt-4">
@@ -188,6 +193,7 @@ export default function Inscricao({ params }: { params: Promise<{ id: string }> 
         </>
       )}
 
+      {/* Passo 3 — Alojamento */}
       {passo === 3 && (
         <>
           <div className="px-4 pt-4">
@@ -196,23 +202,43 @@ export default function Inscricao({ params }: { params: Promise<{ id: string }> 
             </p>
             <div className="bg-white border border-[#e8e4df] rounded-xl overflow-hidden mb-4">
               {[
-                { label: "Box", desc: "Alojamento individual para o cavalo", value: box, setter: setBox, icon: "🏠" },
-                { label: "Palha", desc: "Cama de palha para a box", value: palha, setter: setPalha, icon: "🌾" },
-                { label: "Aparas", desc: "Cama de aparas para a box", value: aparas, setter: setAparas, icon: "🪵" },
-                { label: "Feno", desc: "Fornecimento de feno durante o concurso", value: feno, setter: setFeno, icon: "🌿" },
+                { label: "Box", desc: "Alojamento individual para o cavalo", value: box, setter: setBox, icon: "🏠", qtd: qtdBox, setQtd: setQtdBox },
+                { label: "Palha", desc: "Cama de palha para a box", value: palha, setter: setPalha, icon: "🌾", qtd: qtdPalha, setQtd: setQtdPalha },
+                { label: "Aparas", desc: "Cama de aparas para a box", value: aparas, setter: setAparas, icon: "🪵", qtd: qtdAparas, setQtd: setQtdAparas },
+                { label: "Feno", desc: "Fornecimento de feno durante o concurso", value: feno, setter: setFeno, icon: "🌿", qtd: qtdFeno, setQtd: setQtdFeno },
               ].map((item, i, arr) => (
-                <div key={item.label} className={`flex items-center gap-3 px-4 py-3 ${i < arr.length - 1 ? "border-b border-[#e8e4df]" : ""}`}>
-                  <span className="text-xl">{item.icon}</span>
-                  <div className="flex-1">
-                    <p className="text-sm font-medium text-[#1a1a1a]">{item.label}</p>
-                    <p className="text-xs text-[#6b6b6b] mt-0.5">{item.desc}</p>
+                <div key={item.label} className={`px-4 py-3 ${i < arr.length - 1 ? "border-b border-[#e8e4df]" : ""}`}>
+                  <div className="flex items-center gap-3">
+                    <span className="text-xl">{item.icon}</span>
+                    <div className="flex-1">
+                      <p className="text-sm font-medium text-[#1a1a1a]">{item.label}</p>
+                      <p className="text-xs text-[#6b6b6b] mt-0.5">{item.desc}</p>
+                    </div>
+                    <button
+                      onClick={() => item.setter(!item.value)}
+                      className={`w-11 h-6 rounded-full relative flex-shrink-0 transition-colors ${item.value ? "bg-[#003d7a]" : "bg-[#e8e4df]"}`}
+                    >
+                      <div className={`absolute top-1 w-4 h-4 rounded-full bg-white transition-all ${item.value ? "right-1" : "left-1"}`} />
+                    </button>
                   </div>
-                  <button
-                    onClick={() => item.setter(!item.value)}
-                    className={`w-11 h-6 rounded-full relative flex-shrink-0 transition-colors ${item.value ? "bg-[#003d7a]" : "bg-[#e8e4df]"}`}
-                  >
-                    <div className={`absolute top-1 w-4 h-4 rounded-full bg-white transition-all ${item.value ? "right-1" : "left-1"}`} />
-                  </button>
+                  {item.value && (
+                    <div className="mt-3 flex items-center gap-3 bg-[#e6eef7] rounded-lg px-3 py-2">
+                      <span className="text-xs text-[#003d7a] font-medium flex-1">Quantidade</span>
+                      <button
+                        onClick={() => item.setQtd(Math.max(1, item.qtd - 1))}
+                        className="w-7 h-7 rounded-full bg-white border border-[#c0d4ec] flex items-center justify-center text-[#003d7a] font-medium text-sm"
+                      >
+                        −
+                      </button>
+                      <span className="text-sm font-medium text-[#1a1a1a] min-w-[20px] text-center">{item.qtd}</span>
+                      <button
+                        onClick={() => item.setQtd(item.qtd + 1)}
+                        className="w-7 h-7 rounded-full bg-[#003d7a] flex items-center justify-center text-white font-medium text-sm"
+                      >
+                        +
+                      </button>
+                    </div>
+                  )}
                 </div>
               ))}
             </div>
@@ -224,7 +250,7 @@ export default function Inscricao({ params }: { params: Promise<{ id: string }> 
               <textarea
                 value={observacoes}
                 onChange={(e) => setObservacoes(e.target.value)}
-                placeholder="Pedidos especiais à organização, necessidades específicas do cavalo, alergias alimentares..."
+                placeholder="Pedidos especiais à organização, necessidades específicas do cavalo..."
                 className="w-full px-4 py-3 text-sm text-[#1a1a1a] placeholder-[#bbb] outline-none resize-none h-28"
               />
             </div>
@@ -241,6 +267,7 @@ export default function Inscricao({ params }: { params: Promise<{ id: string }> 
         </>
       )}
 
+      {/* Passo 4 — Confirmação */}
       {passo === 4 && (
         <>
           <div className="px-4 pt-4">
@@ -268,10 +295,10 @@ export default function Inscricao({ params }: { params: Promise<{ id: string }> 
                   </div>
                 ));
               })}
-              {box && <div className="flex justify-between px-4 py-2.5 border-b border-[#e8e4df] text-xs"><span className="text-[#6b6b6b]">🏠 Box</span><span className="font-medium">Solicitado</span></div>}
-              {palha && <div className="flex justify-between px-4 py-2.5 border-b border-[#e8e4df] text-xs"><span className="text-[#6b6b6b]">🌾 Palha</span><span className="font-medium">Solicitado</span></div>}
-              {aparas && <div className="flex justify-between px-4 py-2.5 border-b border-[#e8e4df] text-xs"><span className="text-[#6b6b6b]">🪵 Aparas</span><span className="font-medium">Solicitado</span></div>}
-              {feno && <div className="flex justify-between px-4 py-2.5 border-b border-[#e8e4df] text-xs"><span className="text-[#6b6b6b]">🌿 Feno</span><span className="font-medium">Solicitado</span></div>}
+              {box && <div className="flex justify-between px-4 py-2.5 border-b border-[#e8e4df] text-xs"><span className="text-[#6b6b6b]">🏠 Box × {qtdBox}</span><span className="font-medium">Solicitado</span></div>}
+              {palha && <div className="flex justify-between px-4 py-2.5 border-b border-[#e8e4df] text-xs"><span className="text-[#6b6b6b]">🌾 Palha × {qtdPalha}</span><span className="font-medium">Solicitado</span></div>}
+              {aparas && <div className="flex justify-between px-4 py-2.5 border-b border-[#e8e4df] text-xs"><span className="text-[#6b6b6b]">🪵 Aparas × {qtdAparas}</span><span className="font-medium">Solicitado</span></div>}
+              {feno && <div className="flex justify-between px-4 py-2.5 border-b border-[#e8e4df] text-xs"><span className="text-[#6b6b6b]">🌿 Feno × {qtdFeno}</span><span className="font-medium">Solicitado</span></div>}
               {observacoes && <div className="px-4 py-2.5 border-b border-[#e8e4df] text-xs"><span className="text-[#6b6b6b]">📝 {observacoes}</span></div>}
               <div className="flex justify-between px-4 py-3 bg-[#e6eef7]">
                 <span className="text-sm font-medium text-[#003d7a]">Total pago</span>
