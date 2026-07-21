@@ -56,7 +56,7 @@ export default function Home() {
             { href: "/rankings", icon: "📊", label: "Rankings", bg: "bg-[#e6eef7]" },
             { href: "/clubes", icon: "🏛️", label: "Clubes", bg: "bg-[#e8f0e8]" },
             { href: "/concursos", icon: "📅", label: "Calendário", bg: "bg-[#f0ece6]" },
-            { href: "/concursos", icon: "📈", label: "Resultados", bg: "bg-[#e8f0e8]" },
+            { href: "/resultados", icon: "📈", label: "Resultados", bg: "bg-[#e8f0e8]" },
             { href: "/noticias", icon: "📰", label: "Notícias", bg: "bg-[#f0ece6]" },
           ].map((item) => (
             <Link key={item.label} href={item.href} className="flex flex-col items-center gap-1.5">
