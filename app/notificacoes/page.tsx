@@ -45,7 +45,7 @@ const notificacoes = [
     id: 5,
     tipo: "alerta",
     titulo: "Inscrições encerram amanhã",
-    descricao: "As inscrições para o cce Évora — Etapa 3 encerram amanhã às 23h59.",
+    descricao: "As inscrições para o CCE Évora — Etapa 3 encerram amanhã às 23h59.",
     tempo: "Ontem às 09:00",
     lida: true,
     icon: "⏰",

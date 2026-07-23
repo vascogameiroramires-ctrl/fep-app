@@ -222,7 +222,7 @@ export default function Perfil() {
         <h2 className="text-white text-xl font-medium">Centro Hípico de Cascais</h2>
         <p className="text-white/50 text-xs mt-1">Federado FEP · Nº 00124</p>
         <div className="flex gap-2 mt-3 flex-wrap">
-          {["Dressage", "Salto", "cce"].map((tag) => (
+          {["Dressage", "Salto", "CCE"].map((tag) => (
             <span key={tag} className="text-[10px] px-2.5 py-1 rounded-full bg-white/10 text-white/80 font-medium">{tag}</span>
           ))}
         </div>
