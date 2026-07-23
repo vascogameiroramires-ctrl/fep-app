@@ -74,7 +74,7 @@ export default function Clubes() {
         {[
           { nome: "Centro Hípico do Porto", morada: "Matosinhos, Porto", modalidades: ["Salto", "Dressage"], atletas: 38 },
           { nome: "Escola de Equitação de Évora", morada: "Évora", modalidades: ["Dressage", "Eq. Trabalho"], atletas: 22 },
-          { nome: "Centro Hípico de Sintra", morada: "Sintra, Lisboa", modalidades: ["Salto", "CCA"], atletas: 31 },
+          { nome: "Centro Hípico de Sintra", morada: "Sintra, Lisboa", modalidades: ["Salto", "cce"], atletas: 31 },
         ].map((c, i) => (
           <div key={i} className="bg-white border border-[#e8e4df] rounded-xl px-4 py-3 flex items-center gap-3 opacity-70">
             <div className="w-12 h-12 rounded-xl bg-[#1a1a1a] flex items-center justify-center text-white text-xs font-medium flex-shrink-0">

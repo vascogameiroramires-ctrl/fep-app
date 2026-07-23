@@ -26,7 +26,7 @@ export default function Resultados() {
 
       {/* Filtros */}
       <div className="bg-[#1a1a1a] px-4 pb-4 flex gap-2 overflow-x-auto">
-        {["Todos", "Dressage", "Salto", "CCA", "Eq. Trabalho"].map((f, i) => (
+        {["Todos", "Dressage", "Salto", "cce", "Eq. Trabalho"].map((f, i) => (
           <button key={f} className={`flex-shrink-0 px-4 py-1.5 rounded-full text-xs font-medium border ${
             i === 0 ? "bg-[#003d7a] border-[#003d7a] text-white" : "border-[#3a3a3a] text-gray-400"
           }`}>

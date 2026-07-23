@@ -22,7 +22,7 @@ export default function Concursos() {
 
       {/* Filtros disciplina */}
       <div className="bg-[#1a1a1a] px-4 pb-4 flex gap-2 overflow-x-auto">
-        {["Todos", "Salto", "Dressage", "CCA", "Eq. Trabalho", "Endurance"].map((f, i) => (
+        {["Todos", "Salto", "Dressage", "cce", "Eq. Trabalho", "Endurance"].map((f, i) => (
           <button
             key={f}
             className={`flex-shrink-0 px-4 py-1.5 rounded-full text-xs font-medium border ${
@@ -64,7 +64,7 @@ export default function Concursos() {
           const disciplinaStyle: Record<string, string> = {
             Salto: "bg-[#e6eef7] text-[#003d7a]",
             Dressage: "bg-[#e8eaf0] text-[#1e2a4a]",
-            CCA: "bg-[#e8f0e8] text-[#2d4a2d]",
+            cce: "bg-[#e8f0e8] text-[#2d4a2d]",
           };
 
           return (
